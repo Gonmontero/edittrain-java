@@ -1,6 +1,5 @@
-package eu.qwan.editrain.services;
+package eu.qwan.editrain.domain;
 
-import eu.qwan.editrain.model.EdiTrainException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;

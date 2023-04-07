@@ -1,9 +1,9 @@
-package eu.qwan.editrain.controllers;
+package eu.qwan.editrain.adapters.controllers;
 
-import eu.qwan.editrain.model.EdiTrainException;
-import eu.qwan.editrain.repositories.CourseRecord;
-import eu.qwan.editrain.repositories.CourseRecordMapper;
-import eu.qwan.editrain.services.CourseService;
+import eu.qwan.editrain.domain.EdiTrainException;
+import eu.qwan.editrain.adapters.repositories.CourseRecord;
+import eu.qwan.editrain.adapters.mappers.CourseRecordMapper;
+import eu.qwan.editrain.domain.CourseService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +12,7 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
-import static eu.qwan.editrain.repositories.CourseRecordMapper.*;
+import static eu.qwan.editrain.adapters.mappers.CourseRecordMapper.*;
 
 class ErrorResponse {
     public final String error;

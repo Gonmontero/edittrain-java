@@ -1,4 +1,4 @@
-package eu.qwan.editrain.repositories;
+package eu.qwan.editrain.adapters.repositories;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

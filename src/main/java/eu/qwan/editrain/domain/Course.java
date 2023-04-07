@@ -1,13 +1,9 @@
-package eu.qwan.editrain.services;
+package eu.qwan.editrain.domain;
 
-import eu.qwan.editrain.repositories.CourseRecord;
-import jdk.jshell.Snippet;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.validation.constraints.NotBlank;
 
 @Data
 @Builder

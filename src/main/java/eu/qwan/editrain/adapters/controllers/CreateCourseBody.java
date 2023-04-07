@@ -1,4 +1,4 @@
-package eu.qwan.editrain.controllers;
+package eu.qwan.editrain.adapters.controllers;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

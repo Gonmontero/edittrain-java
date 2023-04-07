@@ -1,6 +1,5 @@
-package eu.qwan.editrain.services;
+package eu.qwan.editrain.domain;
 
-import eu.qwan.editrain.model.EdiTrainException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Nested;

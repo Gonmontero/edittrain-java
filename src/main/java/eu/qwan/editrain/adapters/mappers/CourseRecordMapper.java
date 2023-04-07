@@ -1,6 +1,7 @@
-package eu.qwan.editrain.repositories;
+package eu.qwan.editrain.adapters.mappers;
 
-import eu.qwan.editrain.services.Course;
+import eu.qwan.editrain.adapters.repositories.CourseRecord;
+import eu.qwan.editrain.domain.Course;
 
 import java.util.List;
 import java.util.stream.Collectors;

@@ -1,7 +1,7 @@
-package eu.qwan.editrain.repositories;
+package eu.qwan.editrain.adapters.repositories;
 
-import eu.qwan.editrain.services.Course;
-import eu.qwan.editrain.services.CourseRepo;
+import eu.qwan.editrain.domain.Course;
+import eu.qwan.editrain.domain.CourseRepo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

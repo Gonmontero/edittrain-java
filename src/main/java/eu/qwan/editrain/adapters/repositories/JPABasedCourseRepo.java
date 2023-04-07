@@ -1,13 +1,12 @@
-package eu.qwan.editrain.repositories;
+package eu.qwan.editrain.adapters.repositories;
 
-import eu.qwan.editrain.services.Course;
-import eu.qwan.editrain.services.CourseRepo;
+import eu.qwan.editrain.adapters.mappers.CourseRecordMapper;
+import eu.qwan.editrain.domain.Course;
+import eu.qwan.editrain.domain.CourseRepo;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
-
-import static eu.qwan.editrain.repositories.CourseRecordMapper.*;
 
 @Component
 public class JPABasedCourseRepo implements CourseRepo {
@@ -19,12 +18,12 @@ public class JPABasedCourseRepo implements CourseRepo {
 
     @Override
     public List<Course> findAll() {
-        return toCourseList(courseRepository.findAll());
+        return CourseRecordMapper.toCourseList(courseRepository.findAll());
     }
 
     @Override
     public Course save(Course course) {
-        return toCourse(courseRepository.save(toCourseRecord(course)));
+        return CourseRecordMapper.toCourse(courseRepository.save(CourseRecordMapper.toCourseRecord(course)));
     }
 
     @Override
