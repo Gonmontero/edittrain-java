@@ -1,6 +1,7 @@
 package eu.qwan.editrain.repositories;
 
 import eu.qwan.editrain.model.Course;
+import eu.qwan.editrain.services.CourseRepo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -20,8 +21,11 @@ public class CourseRepositoryTests {
     @Autowired
     CourseRepository courseRepository;
 
+    CourseRepo courseRepo;
+
     @BeforeEach
     public void setUp() {
+        courseRepo = new JPABasedCourseRepo(courseRepository);
         courseRepository.deleteAll();
     }
 
@@ -29,27 +33,27 @@ public class CourseRepositoryTests {
     class ContentsOfRepository {
         @Test
         public void isEmptyInitially() {
-            assertThat(courseRepository.findAll(), is(empty()));
+            assertThat(courseRepo.findAll(), is(empty()));
         }
 
         @Test
         public void containsSavedCourses() {
             Course course = new Course(UUID.randomUUID().toString(), "name", "description", "john@edutrain.eu");
-            courseRepository.save(course);
-            assertThat(courseRepository.findAll(), is(List.of(course)));
+            courseRepo.save(course);
+            assertThat(courseRepo.findAll(), is(List.of(course)));
         }
     }
     @Nested
     class AccessingCoursesById {
         @Test
         public void returnsNothingWhenRepositoryIsEmpty() {
-            assertThat(courseRepository.findById("some-id"), is(Optional.empty()));
+            assertThat(courseRepo.findById("some-id"), is(Optional.empty()));
         }
         @Test
         public void returnsASavedCourseWhenAvailable() {
             Course course = new Course(UUID.randomUUID().toString(), "name", "description", "john@edutrain.eu");
-            courseRepository.save(course);
-            assertThat(courseRepository.findById(course.getId()), is(Optional.of(course)));
+            courseRepo.save(course);
+            assertThat(courseRepo.findById(course.getId()), is(Optional.of(course)));
         }
     }
 }
