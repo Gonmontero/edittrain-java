@@ -1,6 +1,5 @@
 package eu.qwan.editrain.repositories;
 
-import eu.qwan.editrain.model.Course;
 import eu.qwan.editrain.services.CourseRepo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -38,7 +37,7 @@ public class CourseRepositoryTests {
 
         @Test
         public void containsSavedCourses() {
-            Course course = new Course(UUID.randomUUID().toString(), "name", "description", "john@edutrain.eu");
+            CourseRecord course = new CourseRecord(UUID.randomUUID().toString(), "name", "description", "john@edutrain.eu");
             courseRepo.save(course);
             assertThat(courseRepo.findAll(), is(List.of(course)));
         }
@@ -51,7 +50,7 @@ public class CourseRepositoryTests {
         }
         @Test
         public void returnsASavedCourseWhenAvailable() {
-            Course course = new Course(UUID.randomUUID().toString(), "name", "description", "john@edutrain.eu");
+            CourseRecord course = new CourseRecord(UUID.randomUUID().toString(), "name", "description", "john@edutrain.eu");
             courseRepo.save(course);
             assertThat(courseRepo.findById(course.getId()), is(Optional.of(course)));
         }

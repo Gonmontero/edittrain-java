@@ -1,6 +1,5 @@
 package eu.qwan.editrain.repositories;
 
-import eu.qwan.editrain.model.Course;
 import eu.qwan.editrain.services.CourseRepo;
 import org.springframework.stereotype.Component;
 
@@ -16,17 +15,17 @@ public class JPABasedCourseRepo implements CourseRepo {
     }
 
     @Override
-    public List<Course> findAll() {
+    public List<CourseRecord> findAll() {
         return courseRepository.findAll();
     }
 
     @Override
-    public Course save(Course course) {
+    public CourseRecord save(CourseRecord course) {
         return courseRepository.save(course);
     }
 
     @Override
-    public Optional<Course> findById(String id) {
+    public Optional<CourseRecord> findById(String id) {
         return courseRepository.findById(id);
     }
 }

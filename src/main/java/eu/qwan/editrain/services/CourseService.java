@@ -1,6 +1,6 @@
 package eu.qwan.editrain.services;
 
-import eu.qwan.editrain.model.Course;
+import eu.qwan.editrain.repositories.CourseRecord;
 import eu.qwan.editrain.model.EdiTrainException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,11 +21,11 @@ public class CourseService {
     }
 
 
-    public List<Course> findAll() {
+    public List<CourseRecord> findAll() {
         return courseRepo.findAll();
     }
 
-    public Optional<Course> create(Course course) {
+    public Optional<CourseRecord> create(CourseRecord course) {
         course.setId(UUID.randomUUID().toString());
         try {
             courseRepo.save(course);
@@ -36,7 +36,7 @@ public class CourseService {
         return Optional.of(course);
     }
 
-    public void update(Course course) {
+    public void update(CourseRecord course) {
         courseRepo.findById(course.getId()).ifPresentOrElse(original -> {
             original.setName(course.getName());
             original.setDescription(course.getDescription());

@@ -1,4 +1,4 @@
-package eu.qwan.editrain.model;
+package eu.qwan.editrain.repositories;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,7 +14,7 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "courses")
-public class Course {
+public class CourseRecord {
     @Id
     private String id;
     @NotBlank
@@ -23,7 +23,7 @@ public class Course {
     @NotBlank
     private String teacher;
 
-    public static CourseBuilder aValidCourse() {
+    public static CourseRecordBuilder aValidCourse() {
         return builder().id("some-id").name("Design Fundamentals").description("Some description").teacher("teacher@editrain.eu");
     }
 }

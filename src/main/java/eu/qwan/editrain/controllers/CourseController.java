@@ -1,6 +1,6 @@
 package eu.qwan.editrain.controllers;
 
-import eu.qwan.editrain.model.Course;
+import eu.qwan.editrain.repositories.CourseRecord;
 import eu.qwan.editrain.model.EdiTrainException;
 import eu.qwan.editrain.services.CourseService;
 import org.springframework.http.HttpStatus;
@@ -28,19 +28,19 @@ public class CourseController {
     }
 
     @GetMapping("/courses")
-    public ResponseEntity<List<Course>> getCourses() {
+    public ResponseEntity<List<CourseRecord>> getCourses() {
         return ResponseEntity.ok(courseService.findAll());
     }
 
     @PostMapping(value="/courses", consumes="application/json", produces="application/json")
-    public ResponseEntity<Optional<Course>> createCourse(@RequestBody @Valid Course body) {
+    public ResponseEntity<Optional<CourseRecord>> createCourse(@RequestBody @Valid CourseRecord body) {
         var course= courseService.create(body);
         System.out.println(course);
         return new ResponseEntity<>(course, HttpStatus.CREATED);
     }
 
     @PutMapping(value="/courses", consumes="application/json", produces="application/json")
-    public ResponseEntity<Optional<Course>> updateCourse(@RequestBody @Valid Course body) {
+    public ResponseEntity<Optional<CourseRecord>> updateCourse(@RequestBody @Valid CourseRecord body) {
         if (body.getId() == null || body.getId().isBlank()) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
         courseService.update(body);

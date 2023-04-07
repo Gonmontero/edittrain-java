@@ -1,9 +1,7 @@
 package eu.qwan.editrain.services;
 
-import eu.qwan.editrain.model.Course;
+import eu.qwan.editrain.repositories.CourseRecord;
 import eu.qwan.editrain.model.EdiTrainException;
-import eu.qwan.editrain.repositories.CourseRepository;
-import eu.qwan.editrain.repositories.JPABasedCourseRepo;
 import org.hibernate.exception.ConstraintViolationException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Nested;
@@ -25,7 +23,7 @@ public class CourseServiceTest {
     class WhenCreatingACourse {
         @Test
         public void savesItInTheRepository() {
-            var createdCourse = courseService.create(new Course("", "name", "description", "marc@edutrain.eu")).get();
+            var createdCourse = courseService.create(new CourseRecord("", "name", "description", "marc@edutrain.eu")).get();
             verify(courseRepository).save(createdCourse);
             assertThat(createdCourse.getId(), is(not("")));
         }
@@ -33,7 +31,7 @@ public class CourseServiceTest {
         @Test
         public void failsWhenNewCourseNameIsNotUnique() {
             when(courseRepository.save(any())).thenThrow(new ConstraintViolationException("Error", null, "name"));
-            var createdCourse = courseService.create(new Course("", "name", "description", "marc@edutrain.eu"));
+            var createdCourse = courseService.create(new CourseRecord("", "name", "description", "marc@edutrain.eu"));
             assertThat(createdCourse, is(Optional.empty()));
         }
     }
@@ -41,7 +39,7 @@ public class CourseServiceTest {
     class WhenGettingCourses {
         @Test
         public void returnsAllCoursesFromTheRepository() {
-            Course course = Course.aValidCourse().build();
+            CourseRecord course = CourseRecord.aValidCourse().build();
             when(courseRepository.findAll()).thenReturn(List.of(course));
             var courses = courseService.findAll();
             assertThat(courses, is(List.of(course)));
@@ -52,8 +50,8 @@ public class CourseServiceTest {
     class WhenUpdatingACourse {
         @Test
         public void savesChangesInTheRepository() {
-            var course = Course.aValidCourse().build();
-            var updated = Course.aValidCourse().name("new name").description("updated").build();
+            var course = CourseRecord.aValidCourse().build();
+            var updated = CourseRecord.aValidCourse().name("new name").description("updated").build();
             when(courseRepository.findById(course.getId())).thenReturn(Optional.of(course));
             courseService.update(updated);
             verify(courseRepository).save(updated);
@@ -61,16 +59,16 @@ public class CourseServiceTest {
 
         @Test
         public void leavesTeacherUnchanged() {
-            var original = Course.aValidCourse().teacher("original@edutrain.eu").build();
-            var updated = Course.aValidCourse().description("updated").teacher("updated@editrain.eu");
+            var original = CourseRecord.aValidCourse().teacher("original@edutrain.eu").build();
+            var updated = CourseRecord.aValidCourse().description("updated").teacher("updated@editrain.eu");
             when(courseRepository.findById(original.getId())).thenReturn(Optional.of(original));
             courseService.update(updated.build());
-            verify(courseRepository).save(Course.aValidCourse().description("updated").teacher("original@edutrain.eu").build());
+            verify(courseRepository).save(CourseRecord.aValidCourse().description("updated").teacher("original@edutrain.eu").build());
         }
 
         @Test
         public void failsWhenTheCourseDoesNotExist() {
-            var course = Course.aValidCourse().build();
+            var course = CourseRecord.aValidCourse().build();
             when(courseRepository.findById(course.getId())).thenReturn(Optional.empty());
             Assertions.assertThrows(EdiTrainException.class, () -> courseService.update(course));
             verify(courseRepository, never()).save(any());
@@ -78,8 +76,8 @@ public class CourseServiceTest {
 
         @Test
         public void failsWhenNewCourseNameIsNotUnique() {
-            var original = Course.aValidCourse().build();
-            var updated = Course.aValidCourse().name("updated").build();
+            var original = CourseRecord.aValidCourse().build();
+            var updated = CourseRecord.aValidCourse().name("updated").build();
             when(courseRepository.findById(original.getId())).thenReturn(Optional.of(original));
             when(courseRepository.save(any())).thenThrow(new ConstraintViolationException("Error", null, "name"));
             Assertions.assertThrows(EdiTrainException.class, () -> courseService.update(updated));
