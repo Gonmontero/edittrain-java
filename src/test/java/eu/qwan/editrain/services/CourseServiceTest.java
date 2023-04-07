@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.Optional;
 
+import static eu.qwan.editrain.repositories.CourseRecordMapper.toCourseRecord;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
@@ -23,15 +24,15 @@ public class CourseServiceTest {
     class WhenCreatingACourse {
         @Test
         public void savesItInTheRepository() {
-            var createdCourse = courseService.create(new CourseRecord("", "name", "description", "marc@edutrain.eu")).get();
-            verify(courseRepository).save(createdCourse);
+            var createdCourse = courseService.create(new Course("", "name", "description", "marc@edutrain.eu")).get();
+            verify(courseRepository).save(toCourseRecord(createdCourse));
             assertThat(createdCourse.getId(), is(not("")));
         }
 
         @Test
         public void failsWhenNewCourseNameIsNotUnique() {
             when(courseRepository.save(any())).thenThrow(new ConstraintViolationException("Error", null, "name"));
-            var createdCourse = courseService.create(new CourseRecord("", "name", "description", "marc@edutrain.eu"));
+            var createdCourse = courseService.create(new Course("", "name", "description", "marc@edutrain.eu"));
             assertThat(createdCourse, is(Optional.empty()));
         }
     }

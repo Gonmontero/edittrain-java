@@ -11,6 +11,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static eu.qwan.editrain.repositories.CourseRecordMapper.toCourseList;
+import static eu.qwan.editrain.repositories.CourseRecordMapper.toCourseRecord;
 
 @Component
 public class CourseService {
@@ -27,10 +28,10 @@ public class CourseService {
         return courseRepo.findAll();
     }
 
-    public Optional<CourseRecord> create(CourseRecord course) {
+    public Optional<Course> create(Course course) {
         course.setId(UUID.randomUUID().toString());
         try {
-            courseRepo.save(course);
+            courseRepo.save(toCourseRecord(course));
         } catch (Exception probablyNonUniqueName) {
             logger.error("Probably non unique name for new course", probablyNonUniqueName);
             return Optional.empty();
