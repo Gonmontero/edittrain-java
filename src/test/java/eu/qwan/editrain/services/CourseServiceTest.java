@@ -3,6 +3,7 @@ package eu.qwan.editrain.services;
 import eu.qwan.editrain.model.Course;
 import eu.qwan.editrain.model.EdiTrainException;
 import eu.qwan.editrain.repositories.CourseRepository;
+import eu.qwan.editrain.repositories.JPABasedCourseRepo;
 import org.hibernate.exception.ConstraintViolationException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Nested;
@@ -18,7 +19,7 @@ import static org.mockito.Mockito.*;
 
 public class CourseServiceTest {
     private CourseRepository courseRepository = mock(CourseRepository.class);
-    private CourseService courseService = new CourseService(courseRepository);
+    private CourseService courseService = new CourseService(new JPABasedCourseRepo(courseRepository));
 
     @Nested
     class WhenCreatingACourse {

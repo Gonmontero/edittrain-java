@@ -2,8 +2,6 @@ package eu.qwan.editrain.services;
 
 import eu.qwan.editrain.model.Course;
 import eu.qwan.editrain.model.EdiTrainException;
-import eu.qwan.editrain.repositories.CourseRepository;
-import eu.qwan.editrain.repositories.JPABasedCourseRepo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -16,13 +14,12 @@ import java.util.UUID;
 public class CourseService {
     private final Logger logger = LoggerFactory.getLogger(CourseService.class);
 
-    private final CourseRepository courseRepository;
     private final CourseRepo courseRepo;
 
-    public CourseService(CourseRepository courseRepository) {
-        this.courseRepository = courseRepository;
-        this.courseRepo = new JPABasedCourseRepo(courseRepository);
+    public CourseService(CourseRepo courseRepo) {
+        this.courseRepo = courseRepo;
     }
+
 
     public List<Course> findAll() {
         return courseRepo.findAll();
