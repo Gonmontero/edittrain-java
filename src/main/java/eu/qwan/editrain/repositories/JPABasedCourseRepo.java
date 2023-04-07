@@ -1,10 +1,13 @@
 package eu.qwan.editrain.repositories;
 
+import eu.qwan.editrain.services.Course;
 import eu.qwan.editrain.services.CourseRepo;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
+
+import static eu.qwan.editrain.repositories.CourseRecordMapper.toCourseList;
 
 @Component
 public class JPABasedCourseRepo implements CourseRepo {
@@ -15,8 +18,8 @@ public class JPABasedCourseRepo implements CourseRepo {
     }
 
     @Override
-    public List<CourseRecord> findAll() {
-        return courseRepository.findAll();
+    public List<Course> findAll() {
+        return toCourseList(courseRepository.findAll());
     }
 
     @Override

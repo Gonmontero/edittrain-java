@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CourseRepo {
-    List<CourseRecord> findAll();
+    List<Course> findAll();
 
     CourseRecord save(CourseRecord course);
 

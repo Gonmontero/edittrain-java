@@ -24,7 +24,7 @@ public class CourseService {
 
 
     public List<Course> findAll() {
-        return toCourseList(courseRepo.findAll());
+        return courseRepo.findAll();
     }
 
     public Optional<CourseRecord> create(CourseRecord course) {

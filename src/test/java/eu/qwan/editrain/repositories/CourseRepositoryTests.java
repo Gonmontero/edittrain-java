@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import static eu.qwan.editrain.repositories.CourseRecordMapper.toCourse;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
@@ -39,7 +40,7 @@ public class CourseRepositoryTests {
         public void containsSavedCourses() {
             CourseRecord course = new CourseRecord(UUID.randomUUID().toString(), "name", "description", "john@edutrain.eu");
             courseRepo.save(course);
-            assertThat(courseRepo.findAll(), is(List.of(course)));
+            assertThat(courseRepo.findAll(), is(List.of(toCourse(course))));
         }
     }
     @Nested

@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.Optional;
 
-import static eu.qwan.editrain.repositories.CourseRecordMapper.toCourse;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
@@ -40,10 +39,10 @@ public class CourseServiceTest {
     class WhenGettingCourses {
         @Test
         public void returnsAllCoursesFromTheRepository() {
-            CourseRecord course = CourseRecord.aValidCourse().build();
+            Course course = Course.aValidCourse().build();
             when(courseRepository.findAll()).thenReturn(List.of(course));
             var courses = courseService.findAll();
-            assertThat(courses, is(List.of(toCourse(course))));
+            assertThat(courses, is(List.of(course)));
         }
     }
 
