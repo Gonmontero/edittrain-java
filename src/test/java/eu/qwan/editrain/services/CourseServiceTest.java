@@ -18,8 +18,8 @@ import static org.hamcrest.Matchers.not;
 import static org.mockito.Mockito.*;
 
 public class CourseServiceTest {
-    private CourseRepository courseRepository = mock(CourseRepository.class);
-    private CourseService courseService = new CourseService(new JPABasedCourseRepo(courseRepository));
+    private CourseRepo courseRepository = mock(CourseRepo.class);
+    private CourseService courseService = new CourseService(courseRepository);
 
     @Nested
     class WhenCreatingACourse {
