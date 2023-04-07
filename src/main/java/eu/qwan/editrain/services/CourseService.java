@@ -3,6 +3,7 @@ package eu.qwan.editrain.services;
 import eu.qwan.editrain.model.Course;
 import eu.qwan.editrain.model.EdiTrainException;
 import eu.qwan.editrain.repositories.CourseRepository;
+import eu.qwan.editrain.repositories.JPABasedCourseRepo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -16,19 +17,21 @@ public class CourseService {
     private final Logger logger = LoggerFactory.getLogger(CourseService.class);
 
     private final CourseRepository courseRepository;
+    private final CourseRepo courseRepo;
 
     public CourseService(CourseRepository courseRepository) {
         this.courseRepository = courseRepository;
+        this.courseRepo = new JPABasedCourseRepo(courseRepository);
     }
 
     public List<Course> findAll() {
-        return courseRepository.findAll();
+        return courseRepo.findAll();
     }
 
     public Optional<Course> create(Course course) {
         course.setId(UUID.randomUUID().toString());
         try {
-            courseRepository.save(course);
+            courseRepo.save(course);
         } catch (Exception probablyNonUniqueName) {
             logger.error("Probably non unique name for new course", probablyNonUniqueName);
             return Optional.empty();
@@ -37,11 +40,11 @@ public class CourseService {
     }
 
     public void update(Course course) {
-        courseRepository.findById(course.getId()).ifPresentOrElse(original -> {
+        courseRepo.findById(course.getId()).ifPresentOrElse(original -> {
             original.setName(course.getName());
             original.setDescription(course.getDescription());
             try {
-                courseRepository.save(original);
+                courseRepo.save(original);
             } catch (Exception probablyNonUniqueName) {
                 logger.error("Probably non unique name for new course", probablyNonUniqueName);
                 throw new EdiTrainException("Error updating course, name should be unique", probablyNonUniqueName);
