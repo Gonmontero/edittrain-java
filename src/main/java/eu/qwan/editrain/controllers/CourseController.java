@@ -1,7 +1,7 @@
 package eu.qwan.editrain.controllers;
 
-import eu.qwan.editrain.repositories.CourseRecord;
 import eu.qwan.editrain.model.EdiTrainException;
+import eu.qwan.editrain.repositories.CourseRecord;
 import eu.qwan.editrain.services.CourseService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
+
+import static eu.qwan.editrain.repositories.CourseRecordMapper.toCourseRecordList;
 
 class ErrorResponse {
     public final String error;
@@ -29,7 +31,7 @@ public class CourseController {
 
     @GetMapping("/courses")
     public ResponseEntity<List<CourseRecord>> getCourses() {
-        return ResponseEntity.ok(courseService.findAll());
+        return ResponseEntity.ok(toCourseRecordList(courseService.findAll()));
     }
 
     @PostMapping(value="/courses", consumes="application/json", produces="application/json")

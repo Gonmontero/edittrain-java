@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import static eu.qwan.editrain.repositories.CourseRecordMapper.toCourseList;
+
 @Component
 public class CourseService {
     private final Logger logger = LoggerFactory.getLogger(CourseService.class);
@@ -21,8 +23,8 @@ public class CourseService {
     }
 
 
-    public List<CourseRecord> findAll() {
-        return courseRepo.findAll();
+    public List<Course> findAll() {
+        return toCourseList(courseRepo.findAll());
     }
 
     public Optional<CourseRecord> create(CourseRecord course) {

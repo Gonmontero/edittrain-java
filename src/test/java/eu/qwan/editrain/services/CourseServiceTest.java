@@ -1,7 +1,7 @@
 package eu.qwan.editrain.services;
 
-import eu.qwan.editrain.repositories.CourseRecord;
 import eu.qwan.editrain.model.EdiTrainException;
+import eu.qwan.editrain.repositories.CourseRecord;
 import org.hibernate.exception.ConstraintViolationException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Nested;
@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.Optional;
 
+import static eu.qwan.editrain.repositories.CourseRecordMapper.toCourse;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
@@ -42,7 +43,7 @@ public class CourseServiceTest {
             CourseRecord course = CourseRecord.aValidCourse().build();
             when(courseRepository.findAll()).thenReturn(List.of(course));
             var courses = courseService.findAll();
-            assertThat(courses, is(List.of(course)));
+            assertThat(courses, is(List.of(toCourse(course))));
         }
     }
 
