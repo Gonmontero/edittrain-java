@@ -7,9 +7,6 @@ import org.hibernate.exception.ConstraintViolationException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,12 +16,9 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
 public class CourseServiceTest {
-    @MockBean
-    private CourseRepository courseRepository;
-    @Autowired
-    private CourseService courseService;
+    private CourseRepository courseRepository = mock(CourseRepository.class);
+    private CourseService courseService = new CourseService(courseRepository);
 
     @Nested
     class WhenCreatingACourse {
