@@ -1,7 +1,5 @@
 package eu.qwan.editrain.services;
 
-import eu.qwan.editrain.repositories.CourseRecord;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -10,5 +8,5 @@ public interface CourseRepo {
 
     Course save(Course course);
 
-    Optional<CourseRecord> findById(String id);
+    Optional<Course> findById(String id);
 }

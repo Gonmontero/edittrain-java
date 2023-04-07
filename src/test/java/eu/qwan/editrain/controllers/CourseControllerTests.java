@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static eu.qwan.editrain.controllers.MockMvcJsonRequests.*;
+import static eu.qwan.editrain.repositories.CourseRecordMapper.toCourse;
 import static java.util.Collections.emptyList;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.*;
@@ -75,7 +76,7 @@ public class CourseControllerTests {
             CourseRecord theCourse = CourseRecord.builder().id("someId").name("courseName").description("someDescription").teacher("jack@qwan.eu").build();
             mockMvc.perform(jsonPut("/courses", toJson(theCourse)))
                     .andExpect(status().isNoContent());
-            verify(courseService).update(theCourse);
+            verify(courseService).update(toCourse(theCourse));
         }
 
         @Test

@@ -28,7 +28,7 @@ public class JPABasedCourseRepo implements CourseRepo {
     }
 
     @Override
-    public Optional<CourseRecord> findById(String id) {
-        return courseRepository.findById(id);
+    public Optional<Course> findById(String id) {
+        return courseRepository.findById(id).map(CourseRecordMapper::toCourse);
     }
 }

@@ -46,7 +46,7 @@ public class CourseController {
     public ResponseEntity<Optional<CourseRecord>> updateCourse(@RequestBody @Valid CourseRecord body) {
         if (body.getId() == null || body.getId().isBlank()) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
-        courseService.update(body);
+        courseService.update(toCourse(body));
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

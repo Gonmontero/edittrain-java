@@ -12,8 +12,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static eu.qwan.editrain.repositories.CourseRecordMapper.toCourse;
-import static eu.qwan.editrain.repositories.CourseRecordMapper.toCourseRecord;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
@@ -55,7 +53,7 @@ public class CourseRepositoryTests {
         public void returnsASavedCourseWhenAvailable() {
             var course = new Course(UUID.randomUUID().toString(), "name", "description", "john@edutrain.eu");
             courseRepo.save(course);
-            assertThat(courseRepo.findById(course.getId()), is(Optional.of(toCourseRecord(course))));
+            assertThat(courseRepo.findById(course.getId()), is(Optional.of(course)));
         }
     }
 }
