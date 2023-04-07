@@ -1,5 +1,6 @@
 package eu.qwan.editrain.repositories;
 
+import eu.qwan.editrain.services.Course;
 import eu.qwan.editrain.services.CourseRepo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -12,6 +13,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static eu.qwan.editrain.repositories.CourseRecordMapper.toCourse;
+import static eu.qwan.editrain.repositories.CourseRecordMapper.toCourseRecord;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
@@ -38,9 +40,9 @@ public class CourseRepositoryTests {
 
         @Test
         public void containsSavedCourses() {
-            CourseRecord course = new CourseRecord(UUID.randomUUID().toString(), "name", "description", "john@edutrain.eu");
+            var course = new Course(UUID.randomUUID().toString(), "name", "description", "john@edutrain.eu");
             courseRepo.save(course);
-            assertThat(courseRepo.findAll(), is(List.of(toCourse(course))));
+            assertThat(courseRepo.findAll(), is(List.of(course)));
         }
     }
     @Nested
@@ -51,9 +53,9 @@ public class CourseRepositoryTests {
         }
         @Test
         public void returnsASavedCourseWhenAvailable() {
-            CourseRecord course = new CourseRecord(UUID.randomUUID().toString(), "name", "description", "john@edutrain.eu");
+            var course = new Course(UUID.randomUUID().toString(), "name", "description", "john@edutrain.eu");
             courseRepo.save(course);
-            assertThat(courseRepo.findById(course.getId()), is(Optional.of(course)));
+            assertThat(courseRepo.findById(course.getId()), is(Optional.of(toCourseRecord(course))));
         }
     }
 }

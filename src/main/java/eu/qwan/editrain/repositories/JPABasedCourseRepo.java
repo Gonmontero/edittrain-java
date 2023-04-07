@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Optional;
 
-import static eu.qwan.editrain.repositories.CourseRecordMapper.toCourseList;
+import static eu.qwan.editrain.repositories.CourseRecordMapper.*;
 
 @Component
 public class JPABasedCourseRepo implements CourseRepo {
@@ -23,8 +23,8 @@ public class JPABasedCourseRepo implements CourseRepo {
     }
 
     @Override
-    public CourseRecord save(CourseRecord course) {
-        return courseRepository.save(course);
+    public Course save(Course course) {
+        return toCourse(courseRepository.save(toCourseRecord(course)));
     }
 
     @Override

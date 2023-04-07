@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface CourseRepo {
     List<Course> findAll();
 
-    CourseRecord save(CourseRecord course);
+    Course save(Course course);
 
     Optional<CourseRecord> findById(String id);
 }
