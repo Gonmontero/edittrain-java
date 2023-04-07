@@ -2,10 +2,12 @@ package eu.qwan.editrain.repositories;
 
 import eu.qwan.editrain.model.Course;
 import eu.qwan.editrain.services.CourseRepo;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
 
+@Component
 public class JPABasedCourseRepo implements CourseRepo {
     private CourseRepository courseRepository;
 

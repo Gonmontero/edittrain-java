@@ -21,11 +21,11 @@ public class CourseRepositoryTests {
     @Autowired
     CourseRepository courseRepository;
 
+    @Autowired
     CourseRepo courseRepo;
 
     @BeforeEach
     public void setUp() {
-        courseRepo = new JPABasedCourseRepo(courseRepository);
         courseRepository.deleteAll();
     }
 
