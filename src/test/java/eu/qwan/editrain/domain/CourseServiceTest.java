@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.Optional;
 
+import static eu.qwan.editrain.domain.builders.Builder.build;
+import static eu.qwan.editrain.domain.builders.CourseBuilder.aValidCourse;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
@@ -38,7 +40,7 @@ public class CourseServiceTest {
     class WhenGettingCourses {
         @Test
         public void returnsAllCoursesFromTheRepository() {
-            Course course = CourseBuilder.aValidCourse().build();
+            Course course = build(aValidCourse());
             when(courseRepository.findAll()).thenReturn(List.of(course));
             var courses = courseService.findAll();
             assertThat(courses, is(List.of(course)));
@@ -49,8 +51,8 @@ public class CourseServiceTest {
     class WhenUpdatingACourse {
         @Test
         public void savesChangesInTheRepository() {
-            var course = CourseBuilder.aValidCourse().build();
-            var updated = CourseBuilder.aValidCourse().withName("new name").withDescription("updated").build();
+            var course = build(aValidCourse());
+            var updated = build(aValidCourse().withName("new name").withDescription("updated"));
             when(courseRepository.findById(course.getId())).thenReturn(Optional.of(course));
             courseService.update(updated);
             verify(courseRepository).save(updated);
@@ -58,16 +60,16 @@ public class CourseServiceTest {
 
         @Test
         public void leavesTeacherUnchanged() {
-            var original = CourseBuilder.aValidCourse().taughtBy("original@edutrain.eu").build();
-            var updated = CourseBuilder.aValidCourse().withDescription("updated").taughtBy("updated@editrain.eu");
+            var original = build(aValidCourse().taughtBy("original@edutrain.eu"));
+            var updated = build(aValidCourse().withDescription("updated").taughtBy("updated@editrain.eu"));
             when(courseRepository.findById(original.getId())).thenReturn(Optional.of(original));
-            courseService.update(updated.build());
-            verify(courseRepository).save(CourseBuilder.aValidCourse().withDescription("updated").taughtBy("original@edutrain.eu").build());
+            courseService.update(updated);
+            verify(courseRepository).save(build(aValidCourse().withDescription("updated").taughtBy("original@edutrain.eu")));
         }
 
         @Test
         public void failsWhenTheCourseDoesNotExist() {
-            var course = CourseBuilder.aValidCourse().build();
+            var course = build(aValidCourse());
             when(courseRepository.findById(course.getId())).thenReturn(Optional.empty());
             Assertions.assertThrows(EdiTrainException.class, () -> courseService.update(course));
             verify(courseRepository, never()).save(any());
@@ -75,8 +77,8 @@ public class CourseServiceTest {
 
         @Test
         public void failsWhenNewCourseNameIsNotUnique() {
-            var original = CourseBuilder.aValidCourse().build();
-            var updated = CourseBuilder.aValidCourse().withName("updated").build();
+            var original = build(aValidCourse());
+            var updated = build(aValidCourse().withName("updated"));
             when(courseRepository.findById(original.getId())).thenReturn(Optional.of(original));
             when(courseRepository.save(any())).thenThrow(new ConstraintViolationException("Error", null, "name"));
             Assertions.assertThrows(EdiTrainException.class, () -> courseService.update(updated));
