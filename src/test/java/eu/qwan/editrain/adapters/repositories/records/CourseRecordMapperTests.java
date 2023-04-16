@@ -1,13 +1,12 @@
-package eu.qwan.editrain.adapters.mappers;
+package eu.qwan.editrain.adapters.repositories.records;
 
-import eu.qwan.editrain.adapters.repositories.CourseRecord;
 import eu.qwan.editrain.domain.Course;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static eu.qwan.editrain.adapters.mappers.CourseRecordMapper.*;
+import static eu.qwan.editrain.adapters.repositories.records.CourseRecordMapper.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 

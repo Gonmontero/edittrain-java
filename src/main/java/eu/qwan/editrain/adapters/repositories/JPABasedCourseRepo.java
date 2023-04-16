@@ -1,6 +1,6 @@
 package eu.qwan.editrain.adapters.repositories;
 
-import eu.qwan.editrain.adapters.mappers.CourseRecordMapper;
+import eu.qwan.editrain.adapters.repositories.records.CourseRecordMapper;
 import eu.qwan.editrain.domain.Course;
 import eu.qwan.editrain.domain.CourseRepo;
 import org.springframework.stereotype.Component;
@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Component
 public class JPABasedCourseRepo implements CourseRepo {
-    private CourseRepository courseRepository;
+    private final CourseRepository courseRepository;
 
     public JPABasedCourseRepo(CourseRepository courseRepository) {
         this.courseRepository = courseRepository;
