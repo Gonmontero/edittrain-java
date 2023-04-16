@@ -8,8 +8,12 @@ public class CourseBuilder implements Builder<Course> {
     private String description;
     private String taughtBy;
 
+    public static CourseBuilder aCourse() {
+        return new CourseBuilder();
+    }
+
     public static CourseBuilder aValidCourse() {
-        return new CourseBuilder().withId("some-id").withName("Design Fundamentals").withDescription("Some description").taughtBy("teacher@editrain.eu");
+        return aCourse().withId("some-id").withName("Design Fundamentals").withDescription("Some description").taughtBy("teacher@editrain.eu");
     }
 
     public CourseBuilder taughtBy(String teacher) {

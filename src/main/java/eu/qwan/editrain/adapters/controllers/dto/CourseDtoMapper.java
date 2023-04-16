@@ -5,14 +5,16 @@ import eu.qwan.editrain.domain.Course;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static eu.qwan.editrain.domain.builders.Builder.build;
+import static eu.qwan.editrain.domain.builders.CourseBuilder.aCourse;
+
 public class CourseDtoMapper {
     public static Course toCourse(CourseDto dto) {
-        return Course.builder()
-                .id(dto.getId())
-                .name(dto.getName())
-                .description(dto.getDescription())
-                .teacher(dto.getTeacher())
-                .build();
+        return build(aCourse()
+                .withId(dto.getId())
+                .withName(dto.getName())
+                .withDescription(dto.getDescription())
+                .taughtBy(dto.getTeacher()));
     }
 
     public static CourseDto toCourseDto(Course course) {

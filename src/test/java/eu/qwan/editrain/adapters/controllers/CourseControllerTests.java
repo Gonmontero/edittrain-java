@@ -3,9 +3,8 @@ package eu.qwan.editrain.adapters.controllers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.qwan.editrain.adapters.controllers.dto.CourseDto;
-import eu.qwan.editrain.domain.EdiTrainException;
-import eu.qwan.editrain.domain.Course;
 import eu.qwan.editrain.domain.CourseService;
+import eu.qwan.editrain.domain.EdiTrainException;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.web.servlet.MockMvc;
@@ -15,6 +14,8 @@ import java.util.List;
 import java.util.Optional;
 
 import static eu.qwan.editrain.adapters.controllers.dto.CourseDtoMapper.toCourse;
+import static eu.qwan.editrain.domain.builders.Builder.build;
+import static eu.qwan.editrain.domain.builders.CourseBuilder.aCourse;
 import static java.util.Collections.emptyList;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.*;
@@ -36,8 +37,8 @@ public class CourseControllerTests {
 
         @Test
         public void getCourses_ReturnsAListOfCoursesWhenCoursesExistInRepository() throws Exception {
-            var course1 = Course.builder().id("1").name("Course1").description("someDescription1").build();
-            var course2 = Course.builder().id("2").name("Course2").description("someDescription2").build();
+            var course1 = build(aCourse().withId("1").withName("Course1").withDescription("someDescription1"));
+            var course2 = build(aCourse().withId("2").withName("Course2").withDescription("someDescription2"));
             when(courseService.findAll()).thenReturn(List.of(course1, course2));
             mockMvc.perform(MockMvcJsonRequests.jsonGet("/courses"))
                     .andExpect(status().isOk())
