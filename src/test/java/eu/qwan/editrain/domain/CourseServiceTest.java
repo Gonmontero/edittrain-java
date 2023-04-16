@@ -1,6 +1,5 @@
 package eu.qwan.editrain.domain;
 
-import eu.qwan.editrain.domain.builders.CourseBuilder;
 import org.hibernate.exception.ConstraintViolationException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Nested;
@@ -17,7 +16,7 @@ import static org.hamcrest.Matchers.not;
 import static org.mockito.Mockito.*;
 
 public class CourseServiceTest {
-    private CourseRepo courseRepository = mock(CourseRepo.class);
+    private CourseRepository courseRepository = mock(CourseRepository.class);
     private CourseService courseService = new CourseService(courseRepository);
 
     @Nested

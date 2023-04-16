@@ -1,7 +1,7 @@
 package eu.qwan.editrain.adapters.repositories;
 
 import eu.qwan.editrain.domain.Course;
-import eu.qwan.editrain.domain.CourseRepo;
+import eu.qwan.editrain.domain.CourseRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -19,41 +19,41 @@ import static org.hamcrest.Matchers.is;
 @SpringBootTest
 public class CourseRepositoryTests {
     @Autowired
-    CourseRepository courseRepository;
+    JpaCourseRepository jpaCourseRepository;
 
     @Autowired
-    CourseRepo courseRepo;
+    CourseRepository courseRepository;
 
     @BeforeEach
     public void setUp() {
-        courseRepository.deleteAll();
+        jpaCourseRepository.deleteAll();
     }
 
     @Nested
     class ContentsOfRepository {
         @Test
         public void isEmptyInitially() {
-            assertThat(courseRepo.findAll(), is(empty()));
+            assertThat(courseRepository.findAll(), is(empty()));
         }
 
         @Test
         public void containsSavedCourses() {
             var course = new Course(UUID.randomUUID().toString(), "name", "description", "john@edutrain.eu");
-            courseRepo.save(course);
-            assertThat(courseRepo.findAll(), is(List.of(course)));
+            courseRepository.save(course);
+            assertThat(courseRepository.findAll(), is(List.of(course)));
         }
     }
     @Nested
     class AccessingCoursesById {
         @Test
         public void returnsNothingWhenRepositoryIsEmpty() {
-            assertThat(courseRepo.findById("some-id"), is(Optional.empty()));
+            assertThat(courseRepository.findById("some-id"), is(Optional.empty()));
         }
         @Test
         public void returnsASavedCourseWhenAvailable() {
             var course = new Course(UUID.randomUUID().toString(), "name", "description", "john@edutrain.eu");
-            courseRepo.save(course);
-            assertThat(courseRepo.findById(course.getId()), is(Optional.of(course)));
+            courseRepository.save(course);
+            assertThat(courseRepository.findById(course.getId()), is(Optional.of(course)));
         }
     }
 }

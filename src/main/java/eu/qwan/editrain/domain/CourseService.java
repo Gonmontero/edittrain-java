@@ -12,21 +12,21 @@ import java.util.UUID;
 public class CourseService {
     private final Logger logger = LoggerFactory.getLogger(CourseService.class);
 
-    private final CourseRepo courseRepo;
+    private final CourseRepository courseRepository;
 
-    public CourseService(CourseRepo courseRepo) {
-        this.courseRepo = courseRepo;
+    public CourseService(CourseRepository courseRepository) {
+        this.courseRepository = courseRepository;
     }
 
 
     public List<Course> findAll() {
-        return courseRepo.findAll();
+        return courseRepository.findAll();
     }
 
     public Optional<Course> create(Course course) {
         course.setId(UUID.randomUUID().toString());
         try {
-            courseRepo.save(course);
+            courseRepository.save(course);
         } catch (Exception probablyNonUniqueName) {
             logger.error("Probably non unique name for new course", probablyNonUniqueName);
             return Optional.empty();
@@ -35,11 +35,11 @@ public class CourseService {
     }
 
     public void update(Course course) {
-        courseRepo.findById(course.getId()).ifPresentOrElse(original -> {
+        courseRepository.findById(course.getId()).ifPresentOrElse(original -> {
             original.setName(course.getName());
             original.setDescription(course.getDescription());
             try {
-                courseRepo.save(original);
+                courseRepository.save(original);
             } catch (Exception probablyNonUniqueName) {
                 logger.error("Probably non unique name for new course", probablyNonUniqueName);
                 throw new EdiTrainException("Error updating course, name should be unique", probablyNonUniqueName);
