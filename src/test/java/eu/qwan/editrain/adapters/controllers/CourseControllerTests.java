@@ -2,7 +2,7 @@ package eu.qwan.editrain.adapters.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import eu.qwan.editrain.adapters.repositories.CourseRecord;
+import eu.qwan.editrain.adapters.controllers.dto.CourseDto;
 import eu.qwan.editrain.domain.EdiTrainException;
 import eu.qwan.editrain.domain.Course;
 import eu.qwan.editrain.domain.CourseService;
@@ -14,7 +14,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.util.List;
 import java.util.Optional;
 
-import static eu.qwan.editrain.adapters.mappers.CourseRecordMapper.toCourse;
+import static eu.qwan.editrain.adapters.mappers.CourseDtoMapper.toCourse;
 import static java.util.Collections.emptyList;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.*;
@@ -53,8 +53,8 @@ public class CourseControllerTests {
     public class PostingACourse {
         @Test
         public void savesIt() throws Exception {
-            var theCourse = Course.builder().id("someId").name("courseName").description("someDescription").teacher("jack@qwan.eu").build();
-            when(courseService.create(theCourse)).thenReturn(Optional.of(theCourse));
+            var theCourse = CourseDto.builder().id("someId").name("courseName").description("someDescription").teacher("jack@qwan.eu").build();
+            when(courseService.create(toCourse(theCourse))).thenReturn(Optional.of(toCourse(theCourse)));
             mockMvc.perform(MockMvcJsonRequests.jsonPost("/courses", toJson(theCourse)))
                     .andExpect(status().isCreated())
                     .andExpect(jsonPath("$.id", is(theCourse.getId())));
@@ -62,7 +62,7 @@ public class CourseControllerTests {
 
         @Test
         public void returns400WhenDataIsNotValid() throws Exception {
-            CourseRecord theCourse = CourseRecord.builder().id("someId").name("").description("someDescription").build();
+            var theCourse = CourseDto.builder().id("someId").name("").description("someDescription").build();
             mockMvc.perform(MockMvcJsonRequests.jsonPost("/courses", toJson(theCourse)))
                     .andExpect(status().is4xxClientError());
         }
@@ -72,7 +72,7 @@ public class CourseControllerTests {
     public class PuttingACourse {
         @Test
         public void updatesIt() throws Exception {
-            CourseRecord theCourse = CourseRecord.builder().id("someId").name("courseName").description("someDescription").teacher("jack@qwan.eu").build();
+            var theCourse = CourseDto.builder().id("someId").name("courseName").description("someDescription").teacher("jack@qwan.eu").build();
             mockMvc.perform(MockMvcJsonRequests.jsonPut("/courses", toJson(theCourse)))
                     .andExpect(status().isNoContent());
             verify(courseService).update(toCourse(theCourse));
@@ -80,21 +80,21 @@ public class CourseControllerTests {
 
         @Test
         public void returns400WhenDataIsNotValid() throws Exception {
-            CourseRecord theCourse = CourseRecord.builder().id("someId").name("").description("someDescription").teacher("jack@qwan.eu").build();
+            var theCourse = CourseDto.builder().id("someId").name("").description("someDescription").teacher("jack@qwan.eu").build();
             mockMvc.perform(MockMvcJsonRequests.jsonPut("/courses", toJson(theCourse)))
                     .andExpect(status().is4xxClientError());
         }
 
         @Test
         public void returns400WhenIdIsMissing() throws Exception {
-            CourseRecord theCourse = CourseRecord.builder().name("name").description("someDescription").teacher("jack@qwan.eu").build();
+            var theCourse = CourseDto.builder().name("name").description("someDescription").teacher("jack@qwan.eu").build();
             mockMvc.perform(MockMvcJsonRequests.jsonPut("/courses", toJson(theCourse)))
                     .andExpect(status().is4xxClientError());
         }
 
         @Test
         public void returns400WithErrorObjectWhenAnEdiTrainExceptionOccurs() throws Exception {
-            CourseRecord theCourse = CourseRecord.aValidCourse().build();
+            var theCourse = CourseDto.aValidCourseDto().build();
             doThrow(new EdiTrainException("ERROR")).when(courseService).update(any());
             mockMvc.perform(MockMvcJsonRequests.jsonPut("/courses", toJson(theCourse)))
                     .andExpect(status().is4xxClientError())

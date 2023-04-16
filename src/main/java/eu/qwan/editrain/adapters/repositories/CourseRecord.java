@@ -5,8 +5,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Data
@@ -17,10 +18,8 @@ import javax.validation.constraints.NotBlank;
 public class CourseRecord {
     @Id
     private String id;
-    @NotBlank
     private String name;
     private String description;
-    @NotBlank
     private String teacher;
 
     public static CourseRecordBuilder aValidCourse() {
