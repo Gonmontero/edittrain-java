@@ -1,7 +1,7 @@
 package eu.qwan.editrain.adapters.controllers;
 
 import eu.qwan.editrain.adapters.controllers.dto.CourseDto;
-import eu.qwan.editrain.adapters.mappers.CourseDtoMapper;
+import eu.qwan.editrain.adapters.controllers.dto.CourseDtoMapper;
 import eu.qwan.editrain.domain.CourseService;
 import eu.qwan.editrain.domain.EdiTrainException;
 import org.springframework.http.HttpStatus;
@@ -12,8 +12,8 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
-import static eu.qwan.editrain.adapters.mappers.CourseDtoMapper.toCourse;
-import static eu.qwan.editrain.adapters.mappers.CourseDtoMapper.toCourseDtoList;
+import static eu.qwan.editrain.adapters.controllers.dto.CourseDtoMapper.toCourse;
+import static eu.qwan.editrain.adapters.controllers.dto.CourseDtoMapper.toCourseDtoList;
 
 class ErrorResponse {
     public final String error;

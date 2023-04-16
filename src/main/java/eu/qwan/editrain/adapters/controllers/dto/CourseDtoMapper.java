@@ -1,6 +1,5 @@
-package eu.qwan.editrain.adapters.mappers;
+package eu.qwan.editrain.adapters.controllers.dto;
 
-import eu.qwan.editrain.adapters.controllers.dto.CourseDto;
 import eu.qwan.editrain.domain.Course;
 
 import java.util.List;

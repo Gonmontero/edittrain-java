@@ -1,9 +1,5 @@
 package eu.qwan.editrain.adapters.controllers.dto;
 
-import eu.qwan.editrain.adapters.controllers.dto.CourseDto;
-import eu.qwan.editrain.adapters.mappers.CourseDtoMapper;
-import eu.qwan.editrain.adapters.repositories.CourseRecord;
-import eu.qwan.editrain.domain.Course;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -11,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static eu.qwan.editrain.adapters.controllers.dto.CourseDto.aValidCourseDto;
-import static eu.qwan.editrain.adapters.mappers.CourseDtoMapper.*;
+import static eu.qwan.editrain.adapters.controllers.dto.CourseDtoMapper.*;
 import static eu.qwan.editrain.domain.Course.aValidCourse;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;

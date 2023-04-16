@@ -14,7 +14,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.util.List;
 import java.util.Optional;
 
-import static eu.qwan.editrain.adapters.mappers.CourseDtoMapper.toCourse;
+import static eu.qwan.editrain.adapters.controllers.dto.CourseDtoMapper.toCourse;
 import static java.util.Collections.emptyList;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.*;
