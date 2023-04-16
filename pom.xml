@@ -5,16 +5,16 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.3</version>
+        <version>2.7.10</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>eu.qwan</groupId>
     <artifactId>editrain-java</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>editrain-java</name>
-    <description>EdiTrain Java exercise code; (c) 2022 QWAN - www.qwan.eu</description>
+    <description>EdiTrain Java exercise code; (c) 2022-2023 QWAN - www.qwan.eu</description>
     <properties>
-        <java.version>11</java.version>
+        <java.version>17</java.version>
     </properties>
     <dependencies>
         <dependency>
