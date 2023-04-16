@@ -50,7 +50,7 @@ public class CourseServiceTest {
         @Test
         public void savesChangesInTheRepository() {
             var course = CourseBuilder.aValidCourse().build();
-            var updated = CourseBuilder.aValidCourse().name("new name").description("updated").build();
+            var updated = CourseBuilder.aValidCourse().withName("new name").withDescription("updated").build();
             when(courseRepository.findById(course.getId())).thenReturn(Optional.of(course));
             courseService.update(updated);
             verify(courseRepository).save(updated);
@@ -58,11 +58,11 @@ public class CourseServiceTest {
 
         @Test
         public void leavesTeacherUnchanged() {
-            var original = CourseBuilder.aValidCourse().teacher("original@edutrain.eu").build();
-            var updated = CourseBuilder.aValidCourse().description("updated").teacher("updated@editrain.eu");
+            var original = CourseBuilder.aValidCourse().taughtBy("original@edutrain.eu").build();
+            var updated = CourseBuilder.aValidCourse().withDescription("updated").taughtBy("updated@editrain.eu");
             when(courseRepository.findById(original.getId())).thenReturn(Optional.of(original));
             courseService.update(updated.build());
-            verify(courseRepository).save(CourseBuilder.aValidCourse().description("updated").teacher("original@edutrain.eu").build());
+            verify(courseRepository).save(CourseBuilder.aValidCourse().withDescription("updated").taughtBy("original@edutrain.eu").build());
         }
 
         @Test
@@ -76,7 +76,7 @@ public class CourseServiceTest {
         @Test
         public void failsWhenNewCourseNameIsNotUnique() {
             var original = CourseBuilder.aValidCourse().build();
-            var updated = CourseBuilder.aValidCourse().name("updated").build();
+            var updated = CourseBuilder.aValidCourse().withName("updated").build();
             when(courseRepository.findById(original.getId())).thenReturn(Optional.of(original));
             when(courseRepository.save(any())).thenThrow(new ConstraintViolationException("Error", null, "name"));
             Assertions.assertThrows(EdiTrainException.class, () -> courseService.update(updated));

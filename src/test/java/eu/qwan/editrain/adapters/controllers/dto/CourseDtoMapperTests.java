@@ -18,7 +18,7 @@ public class CourseDtoMapperTests {
         @Test
         public void takesAllAttributesOverToCourse() {
             var dto = aValidCourseDto().id("some-id").name("some-name").description("some-description").teacher("some-teacher").build();
-            var course = aValidCourse().id("some-id").name("some-name").description("some-description").teacher("some-teacher").build();
+            var course = aValidCourse().withId("some-id").withName("some-name").withDescription("some-description").taughtBy("some-teacher").build();
             MatcherAssert.assertThat(toCourse(dto),equalTo(course));
         }
         @Test
@@ -35,14 +35,14 @@ public class CourseDtoMapperTests {
         @Test
         public void takesAllAttributesOverToCourse() {
             var record = aValidCourseDto().id("some-id").name("some-name").description("some-description").teacher("some-teacher").build();
-            var course = aValidCourse().id("some-id").name("some-name").description("some-description").teacher("some-teacher").build();
+            var course = aValidCourse().withId("some-id").withName("some-name").withDescription("some-description").taughtBy("some-teacher").build();
             assertThat(toCourseDto(course),equalTo(record));
 
         }
         @Test
         public void mappingAListMapsAllElementsInAList() {
-            var course1 = aValidCourse().name("course1").build();
-            var course2 = aValidCourse().name("course2").build();
+            var course1 = aValidCourse().withName("course1").build();
+            var course2 = aValidCourse().withName("course2").build();
             assertThat(toCourseDtoList(List.of(course1, course2)),
                     equalTo(List.of(toCourseDto(course1), toCourseDto(course2))));
 

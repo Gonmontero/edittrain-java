@@ -16,7 +16,7 @@ public class CourseRecordMapperTests {
         @Test
         public void takesAllAttributesOverToCourse() {
             var record = CourseRecord.aValidCourseRecord().id("some-id").name("some-name").description("some-descriptio").teacher("some-teacher").build();
-            var course = CourseBuilder.aValidCourse().id("some-id").name("some-name").description("some-descriptio").teacher("some-teacher").build();
+            var course = CourseBuilder.aValidCourse().withId("some-id").withName("some-name").withDescription("some-descriptio").taughtBy("some-teacher").build();
             assertThat(toCourse(record),equalTo(course));
         }
         @Test
@@ -33,14 +33,14 @@ public class CourseRecordMapperTests {
         @Test
         public void takesAllAttributesOverToCourse() {
             var record = CourseRecord.aValidCourseRecord().id("some-id").name("some-name").description("some-descriptio").teacher("some-teacher").build();
-            var course = CourseBuilder.aValidCourse().id("some-id").name("some-name").description("some-descriptio").teacher("some-teacher").build();
+            var course = CourseBuilder.aValidCourse().withId("some-id").withName("some-name").withDescription("some-descriptio").taughtBy("some-teacher").build();
             assertThat(toCourseRecord(course),equalTo(record));
 
         }
         @Test
         public void mappingAListMapsAllElementsInAList() {
-            var course1 = CourseBuilder.aValidCourse().name("course1").build();
-            var course2 = CourseBuilder.aValidCourse().name("course2").build();
+            var course1 = CourseBuilder.aValidCourse().withName("course1").build();
+            var course2 = CourseBuilder.aValidCourse().withName("course2").build();
             assertThat(toCourseRecordList(List.of(course1, course2)),
                     equalTo(List.of(toCourseRecord(course1), toCourseRecord(course2))));
 
