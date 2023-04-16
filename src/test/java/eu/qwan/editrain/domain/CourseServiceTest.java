@@ -1,5 +1,6 @@
 package eu.qwan.editrain.domain;
 
+import eu.qwan.editrain.domain.builders.CourseBuilder;
 import org.hibernate.exception.ConstraintViolationException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Nested;
@@ -37,7 +38,7 @@ public class CourseServiceTest {
     class WhenGettingCourses {
         @Test
         public void returnsAllCoursesFromTheRepository() {
-            Course course = Course.aValidCourse().build();
+            Course course = CourseBuilder.aValidCourse().build();
             when(courseRepository.findAll()).thenReturn(List.of(course));
             var courses = courseService.findAll();
             assertThat(courses, is(List.of(course)));
@@ -48,8 +49,8 @@ public class CourseServiceTest {
     class WhenUpdatingACourse {
         @Test
         public void savesChangesInTheRepository() {
-            var course = Course.aValidCourse().build();
-            var updated = Course.aValidCourse().name("new name").description("updated").build();
+            var course = CourseBuilder.aValidCourse().build();
+            var updated = CourseBuilder.aValidCourse().name("new name").description("updated").build();
             when(courseRepository.findById(course.getId())).thenReturn(Optional.of(course));
             courseService.update(updated);
             verify(courseRepository).save(updated);
@@ -57,16 +58,16 @@ public class CourseServiceTest {
 
         @Test
         public void leavesTeacherUnchanged() {
-            var original = Course.aValidCourse().teacher("original@edutrain.eu").build();
-            var updated = Course.aValidCourse().description("updated").teacher("updated@editrain.eu");
+            var original = CourseBuilder.aValidCourse().teacher("original@edutrain.eu").build();
+            var updated = CourseBuilder.aValidCourse().description("updated").teacher("updated@editrain.eu");
             when(courseRepository.findById(original.getId())).thenReturn(Optional.of(original));
             courseService.update(updated.build());
-            verify(courseRepository).save(Course.aValidCourse().description("updated").teacher("original@edutrain.eu").build());
+            verify(courseRepository).save(CourseBuilder.aValidCourse().description("updated").teacher("original@edutrain.eu").build());
         }
 
         @Test
         public void failsWhenTheCourseDoesNotExist() {
-            var course = Course.aValidCourse().build();
+            var course = CourseBuilder.aValidCourse().build();
             when(courseRepository.findById(course.getId())).thenReturn(Optional.empty());
             Assertions.assertThrows(EdiTrainException.class, () -> courseService.update(course));
             verify(courseRepository, never()).save(any());
@@ -74,8 +75,8 @@ public class CourseServiceTest {
 
         @Test
         public void failsWhenNewCourseNameIsNotUnique() {
-            var original = Course.aValidCourse().build();
-            var updated = Course.aValidCourse().name("updated").build();
+            var original = CourseBuilder.aValidCourse().build();
+            var updated = CourseBuilder.aValidCourse().name("updated").build();
             when(courseRepository.findById(original.getId())).thenReturn(Optional.of(original));
             when(courseRepository.save(any())).thenThrow(new ConstraintViolationException("Error", null, "name"));
             Assertions.assertThrows(EdiTrainException.class, () -> courseService.update(updated));

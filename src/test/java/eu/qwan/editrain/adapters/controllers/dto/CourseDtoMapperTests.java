@@ -8,7 +8,7 @@ import java.util.List;
 
 import static eu.qwan.editrain.adapters.controllers.dto.CourseDto.aValidCourseDto;
 import static eu.qwan.editrain.adapters.controllers.dto.CourseDtoMapper.*;
-import static eu.qwan.editrain.domain.Course.aValidCourse;
+import static eu.qwan.editrain.domain.builders.CourseBuilder.aValidCourse;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 

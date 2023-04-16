@@ -22,7 +22,7 @@ public class CourseRecord {
     private String description;
     private String teacher;
 
-    public static CourseRecordBuilder aValidCourse() {
+    public static CourseRecordBuilder aValidCourseRecord() {
         return builder().id("some-id").name("Design Fundamentals").description("Some description").teacher("teacher@editrain.eu");
     }
 }
