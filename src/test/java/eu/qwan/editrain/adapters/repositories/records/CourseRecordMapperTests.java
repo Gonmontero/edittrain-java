@@ -1,6 +1,5 @@
 package eu.qwan.editrain.adapters.repositories.records;
 
-import eu.qwan.editrain.domain.builders.CourseBuilder;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
